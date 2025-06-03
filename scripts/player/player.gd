@@ -6,6 +6,10 @@ extends CharacterBody3D
 # head/camera of the player
 @onready var head := $Head
 
+# collision shapes for each movement state
+@onready var walking_collider := $WalkingCollider
+@onready var crouching_collider := $CrouchingCollider
+
 # checks for collisions with the ceiling, used for determining if
 # the player can un-crouch or not
 @onready var roof_ray := $RoofRay
@@ -21,7 +25,9 @@ const CROUCHING_DEPTH := 0.9
 const HEAD_MOVE_MULTIPLIER := 15.0
 
 # value used when actually calculating movement
-var current_speed := 5.0
+var current_speed := WALKING_SPEED
+# value used when determining how high or low the player's head should be
+var current_head_depth := WALKING_DEPTH
 # current movement state (walking or crouching?)
 var crouching := false
 
@@ -41,19 +47,24 @@ func _ready() -> void:
 
 # MOVEMENT ====================================================================
 func _physics_process(delta: float) -> void:
-	# toggle-able crouching
+	# toggleable crouching
 	if Input.is_action_just_pressed("crouch"):
 		if crouching and not roof_ray.is_colliding():
 			# only stand up if there isn't anything above them (such as a ceiling)
 			current_speed = WALKING_SPEED
-			head.position.y = WALKING_DEPTH
+			current_head_depth = WALKING_DEPTH
+			crouching = not crouching
+			swap_colliders()
 		elif not crouching:
 			# make the player crouch
 			current_speed = CROUCHING_SPEED
-			head.position.y = CROUCHING_DEPTH
-		
-		# flip state
-		crouching = not crouching
+			current_head_depth = CROUCHING_DEPTH
+			crouching = not crouching
+			swap_colliders()
+	
+	# move head based on current state
+	# TODO: move basically all this logic to a FSM
+	head.position.y = lerp(head.position.y, current_head_depth, delta * HEAD_MOVE_MULTIPLIER)
 	
 	# apply gravity
 	if not is_on_floor():
@@ -76,10 +87,12 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 	
 	move_and_slide()
-	
-	# DEBUG: reset player position after a certain Y-level
-	if global_position.y <= -50.0:
-		global_position = Vector3.ZERO
+
+
+# flip the current collider
+func swap_colliders() -> void:
+	walking_collider.disabled = not walking_collider.disabled
+	crouching_collider.disabled = not crouching_collider.disabled
 
 
 # LOOKING AROUND ==============================================================

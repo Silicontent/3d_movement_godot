@@ -1,10 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://j1qfwaml0kb4"]
+[gd_scene load_steps=14 format=3 uid="uid://j1qfwaml0kb4"]
 
 [ext_resource type="Material" uid="uid://bwi4amqkytg4l" path="res://assets/debug_material.tres" id="1_71j4m"]
 [ext_resource type="Texture2D" uid="uid://cw5i0mqr6ndtd" path="res://assets/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://uto1ebtejtxa" path="res://scenes/player.tscn" id="3_4wyf3"]
+[ext_resource type="Script" uid="uid://dj00aegjjg7k7" path="res://scripts/void_area.gd" id="3_qfnet"]
 [ext_resource type="Script" uid="uid://bdjbgd1eqlgxc" path="res://scripts/hud.gd" id="4_71j4m"]
 [ext_resource type="PackedScene" uid="uid://dn3q1ama7vuvg" path="res://scenes/pause.tscn" id="4_k0juu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71j4m"]
+bounce = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_71j4m"]
+radius = 0.25
+height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qfnet"]
+radius = 0.25
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_rwgxs"]
 panorama = ExtResource("1_nnsk1")
@@ -17,6 +28,9 @@ background_mode = 2
 sky = SubResource("Sky_4wyf3")
 tonemap_mode = 2
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_qfnet"]
+size = Vector3(100, 0.5, 100)
+
 [node name="World" type="Node3D"]
 
 [node name="Stage" type="Node3D" parent="."]
@@ -24,50 +38,78 @@ tonemap_mode = 2
 [node name="CSGBox3D" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(20, 0.05, 20)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 0.865894, -0.500227, 0, 0.500227, 0.865894, 0, -0.704426, -6.90684)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(1, 2.56006, 3.78027)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.760284, 3)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(0.157227, 2.52057, 1)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.691269, 0.760284, 3)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(0.157227, 2.52057, 1)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.35474, 1.35686, 3)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(0.157227, 1.40039, 1.07422)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.287909, 0.760284, 3)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(0.157227, 2.52057, 1)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.02082, 0.760284, 3)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(0.157227, 2.52057, 1)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="Stage"]
 transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, -0.357351, 1.10325, 3)
 use_collision = true
+collision_layer = 2
+collision_mask = 5
 size = Vector3(0.157227, 1.40039, 1.07422)
 material = ExtResource("1_71j4m")
+
+[node name="TestBall" type="RigidBody3D" parent="Stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01134, 1.35745, -3.04048)
+collision_layer = 4
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_71j4m")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/TestBall"]
+mesh = SubResource("SphereMesh_71j4m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/TestBall"]
+shape = SubResource("SphereShape3D_qfnet")
 
 [node name="Environment" type="Node3D" parent="."]
 
@@ -78,10 +120,44 @@ environment = SubResource("Environment_k0juu")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
+[node name="VoidArea" type="Area3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -50, 0)
+collision_layer = 15
+collision_mask = 15
+script = ExtResource("3_qfnet")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/VoidArea"]
+shape = SubResource("BoxShape3D_qfnet")
+
 [node name="Player" parent="." instance=ExtResource("3_4wyf3")]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("4_71j4m")
 
+[node name="Overlay" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Reticle" type="ColorRect" parent="HUD/Overlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2.5
+offset_top = -2.5
+offset_right = 2.5
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Pause" parent="HUD" instance=ExtResource("4_k0juu")]
 visible = false
+
+[connection signal="body_entered" from="Environment/VoidArea" to="Environment/VoidArea" method="_on_body_entered"]
