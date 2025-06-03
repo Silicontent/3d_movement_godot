@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dn3q1ama7vuvg" path="res://scenes/pause.tscn" id="4_k0juu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71j4m"]
-bounce = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_71j4m"]
 radius = 0.25
@@ -97,6 +96,30 @@ use_collision = true
 collision_layer = 2
 collision_mask = 5
 size = Vector3(0.157227, 1.40039, 1.07422)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46973, -0.15, -8.98013)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(9.93945, 3, 2.15625)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.42218, -0.15, -7.21214)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(1.44092, 3, 2)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-1, -4.37312e-08, -7.56989e-08, 1.6071e-08, 0.75918, -0.65088, 8.59329e-08, -0.65088, -0.75918, -6.06037, 1.73138, -5.90218)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(1, 0.654908, 3.78027)
 material = ExtResource("1_71j4m")
 
 [node name="TestBall" type="RigidBody3D" parent="Stage"]
