@@ -1,0 +1,97 @@
+# HUGE thanks to https://www.youtube.com/watch?v=xIKErMgJ1Yk
+# for this first-person controller
+
+extends CharacterBody3D
+
+# head/camera of the player
+@onready var head := $Head
+
+# checks for collisions with the ceiling, used for determining if
+# the player can un-crouch or not
+@onready var roof_ray := $RoofRay
+
+#region movement attributes
+const WALKING_SPEED := 5.0
+const CROUCHING_SPEED := 2.0
+# height of the player's head when walking
+const WALKING_DEPTH := 1.8
+# height of the player's head when crouching
+const CROUCHING_DEPTH := 0.9
+# how quickly the player ducks down and rises back up
+const HEAD_MOVE_MULTIPLIER := 15.0
+
+# value used when actually calculating movement
+var current_speed := 5.0
+# current movement state (walking or crouching?)
+var crouching := false
+
+# how quickly the player speeds up and slows down
+const MOMENTUM := 25.0
+# movement direction in 3D space
+var direction := Vector3.ZERO
+#endregion
+
+# mouse sensitivity
+const MOUSE_SENS := 0.25
+
+
+func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+# MOVEMENT ====================================================================
+func _physics_process(delta: float) -> void:
+	# toggle-able crouching
+	if Input.is_action_just_pressed("crouch"):
+		if crouching and not roof_ray.is_colliding():
+			# only stand up if there isn't anything above them (such as a ceiling)
+			current_speed = WALKING_SPEED
+			head.position.y = WALKING_DEPTH
+		elif not crouching:
+			# make the player crouch
+			current_speed = CROUCHING_SPEED
+			head.position.y = CROUCHING_DEPTH
+		
+		# flip state
+		crouching = not crouching
+	
+	# apply gravity
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+	
+	# get input direction and calculate movement direction
+	var input_dir := Input.get_vector("left", "right", "forward", "backward")
+	direction = lerp(
+		direction,
+		(transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(),
+		delta * MOMENTUM
+	)
+	
+	# handle movement
+	if direction:
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
+	else:
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+		velocity.z = move_toward(velocity.z, 0, current_speed)
+	
+	move_and_slide()
+	
+	# DEBUG: reset player position after a certain Y-level
+	if global_position.y <= -50.0:
+		global_position = Vector3.ZERO
+
+
+# LOOKING AROUND ==============================================================
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		# left-and-right head movement
+		# rotate PLAYER around the player's Y-axis based on the mouse's X-axis movement
+		rotate_y(deg_to_rad(-event.relative.x * MOUSE_SENS))
+		# up-and-down head movement
+		# rotate HEAD around the head's X-axis based on the mouse's Y-axis movement
+		head.rotate_x(deg_to_rad(-event.relative.y * MOUSE_SENS))
+		
+		# clamp head rotation so player can't invert their head
+		# (very painful from what I've heard)
+		head.rotation.x = clamp(head.rotation.x, deg_to_rad(-89), deg_to_rad(89))

@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://uto1ebtejtxa"]
+
+[ext_resource type="Script" uid="uid://orcm0gu6kbrp" path="res://scripts/player.gd" id="1_3vyb7"]
+[ext_resource type="Shape3D" uid="uid://cr555uddpj0rk" path="res://assets/walking_collider.tres" id="2_g2els"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_3vyb7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = ExtResource("2_g2els")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00708365, 0.00974345, 0.00453043)
+
+[node name="RoofRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, 1, 0)
+hit_from_inside = true
+collide_with_areas = true
