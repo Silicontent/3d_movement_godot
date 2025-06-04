@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://dj00aegjjg7k7" path="res://scripts/void_area.gd" id="3_qfnet"]
 [ext_resource type="Script" uid="uid://bdjbgd1eqlgxc" path="res://scripts/hud.gd" id="4_71j4m"]
 [ext_resource type="PackedScene" uid="uid://dn3q1ama7vuvg" path="res://scenes/pause.tscn" id="4_k0juu"]
+[ext_resource type="Texture2D" uid="uid://4imm3hek2m8i" path="res://assets/hud/reticle.png" id="6_i7141"]
+[ext_resource type="Texture2D" uid="uid://gbbcwfnjwud7" path="res://assets/hud/reticle_circle.png" id="7_4mrxx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71j4m"]
 
@@ -35,26 +37,6 @@ tonemap_mode = 2
 [sub_resource type="BoxShape3D" id="BoxShape3D_qfnet"]
 size = Vector3(100, 0.5, 100)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i7141"]
-bg_color = Color(1, 1, 1, 1)
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qfnet"]
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 30
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-
 [node name="World" type="Node3D"]
 
 [node name="Stage" type="Node3D" parent="."]
@@ -68,11 +50,11 @@ size = Vector3(20, 0.05, 20)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="Stage"]
-transform = Transform3D(1, 0, 0, 0, 0.865894, -0.500227, 0, 0.500227, 0.865894, 0, -0.704426, -6.90684)
+transform = Transform3D(1, 0, 0, 0, 0.706921, -0.707292, 0, 0.707292, 0.706921, 0, -1, -7)
 use_collision = true
 collision_layer = 2
 collision_mask = 5
-size = Vector3(1, 2.56006, 3.78027)
+size = Vector3(2, 3, 4)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Stage"]
@@ -124,27 +106,27 @@ size = Vector3(0.157227, 1.40039, 1.07422)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="Stage"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.46973, -0.15, -8.98013)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0272498, -8.35297)
 use_collision = true
 collision_layer = 2
 collision_mask = 5
-size = Vector3(9.93945, 3, 2.15625)
+size = Vector3(10, 3, 2)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="Stage"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.42218, -0.15, -7.21214)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, -0.027, -5.853)
 use_collision = true
 collision_layer = 2
 collision_mask = 5
-size = Vector3(1.44092, 3, 2)
+size = Vector3(7, 3, 2)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="Stage"]
-transform = Transform3D(-1, -4.37312e-08, -7.56989e-08, 1.6071e-08, 0.75918, -0.65088, 8.59329e-08, -0.65088, -0.75918, -6.06037, 1.73138, -5.90218)
+transform = Transform3D(-1, 6.18334e-08, 6.1801e-08, 0, 0.706921, -0.707292, -8.74228e-08, -0.707292, -0.706921, -6, 2.33733, -1.55787)
 use_collision = true
 collision_layer = 2
 collision_mask = 5
-size = Vector3(1, 0.654908, 3.78027)
+size = Vector3(1.999, 0.32, 2.897)
 material = ExtResource("1_71j4m")
 
 [node name="CSGBox3D12" type="CSGBox3D" parent="Stage"]
@@ -171,11 +153,76 @@ collision_mask = 5
 size = Vector3(0.157227, 1.40039, 1.07422)
 material = ExtResource("1_71j4m")
 
+[node name="CSGBox3D15" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-1, 6.18334e-08, 6.1801e-08, 6.18172e-08, 1, -0.000262439, -6.18172e-08, -0.000262439, -1, -5.99895, 3.312, 2.34863)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(1.999, 0.32, 6)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D16" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-4.37114e-08, 0.707292, 0.706921, 0, 0.706921, -0.707292, -1, -3.09167e-08, -3.09005e-08, 5.351, -1.001, -8.353)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(1.98975, 3, 4)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D17" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(1.05529e-07, 0.000262439, 1, 6.18172e-08, 1, -0.000262439, -1, 6.18449e-08, 1.05512e-07, -2.58918, 3.31163, 6.34167)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(1.999, 0.32, 8.81873)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.35711, 4.30476, 5.62167)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(0.157227, 1.66409, 5.49188)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D19" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.35711, 4.30476, 6.92049)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(0.157227, 1.66409, 5.49188)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D20" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.34414, 5.07597, 6.26693)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(0.157227, 1.40039, 5.54016)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D21" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.06928, 4.30476, 6.31552)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(0.157227, 1.66409, 1.19272)
+material = ExtResource("1_71j4m")
+
+[node name="CSGBox3D22" type="CSGBox3D" parent="Stage"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6, 1.49104, -9.26877)
+use_collision = true
+collision_layer = 2
+collision_mask = 5
+size = Vector3(0.168457, 0.589355, 2)
+material = ExtResource("1_71j4m")
+
 [node name="TestBall" type="RigidBody3D" parent="Stage"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.01134, 1.35745, -3.04048)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.98144, 5.1406, -0.771764)
 collision_layer = 4
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_71j4m")
+metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Stage/TestBall"]
 mesh = SubResource("SphereMesh_71j4m")
@@ -216,35 +263,38 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Reticle" type="Panel" parent="Player/HUD/Overlay"]
+[node name="Reticle" type="TextureRect" parent="Player/HUD/Overlay"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -2.0
-offset_top = -2.0
-offset_right = 2.0
-offset_bottom = 2.0
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_i7141")
+pivot_offset = Vector2(18, 18)
+texture = ExtResource("6_i7141")
 
-[node name="InteractCircle" type="Panel" parent="Player/HUD/Overlay"]
+[node name="ReticleCircle" type="TextureRect" parent="Player/HUD/Overlay"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 18.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_qfnet")
+scale = Vector2(1e-05, 1e-05)
+pivot_offset = Vector2(18, 18)
+texture = ExtResource("7_4mrxx")
 
 [node name="Pause" parent="Player/HUD" instance=ExtResource("4_k0juu")]
 visible = false
