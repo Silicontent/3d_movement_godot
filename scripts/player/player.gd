@@ -1,6 +1,7 @@
 # HUGE thanks to https://www.youtube.com/watch?v=xIKErMgJ1Yk
 # for this first-person controller
 
+class_name Player
 extends CharacterBody3D
 
 # head/camera of the player
@@ -13,6 +14,9 @@ extends CharacterBody3D
 # checks for collisions with the ceiling, used for determining if
 # the player can un-crouch or not
 @onready var roof_ray := $RoofRay
+
+# allows the player to pick up items from a short distance away
+@onready var reach_ray := $Head/ReachRay
 
 #region movement attributes
 const WALKING_SPEED := 5.0
@@ -69,6 +73,9 @@ func _physics_process(delta: float) -> void:
 	# apply gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	
+	if Input.is_action_just_pressed("dbg_jump") and is_on_floor():
+		velocity.y = 7
 	
 	# get input direction and calculate movement direction
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
