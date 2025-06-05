@@ -47,6 +47,7 @@ const MOUSE_SENS := 0.25
 
 
 func _ready() -> void:
+	# capture mouse to allow for first-person camera control
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
