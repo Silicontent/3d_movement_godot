@@ -4,6 +4,7 @@
 class_name Player
 extends CharacterBody3D
 
+#region player parts
 # head/camera of the player
 @onready var head := $Head
 
@@ -14,11 +15,11 @@ extends CharacterBody3D
 # checks for collisions with the ceiling, used for determining if
 # the player can un-crouch or not
 @onready var roof_ray := $RoofRay
-
 # allows the player to pick up items from a short distance away
 @onready var reach_ray := $Head/ReachRay
+#endregion
 
-#region movement attributes
+#region movement/camera attributes
 const WALKING_SPEED := 5.0
 const CROUCHING_SPEED := 2.0
 # height of the player's head when walking
@@ -39,10 +40,14 @@ var crouching := false
 const MOMENTUM := 25.0
 # movement direction in 3D space
 var direction := Vector3.ZERO
-#endregion
 
 # mouse sensitivity
 const MOUSE_SENS := 0.25
+#endregion
+
+#region player states
+@export_enum("Idle", "Moving", "Falling") var state := 0
+#endregion
 
 
 func _ready() -> void:
@@ -67,7 +72,6 @@ func _physics_process(delta: float) -> void:
 			swap_colliders()
 	
 	# move head based on current state
-	# TODO: move basically all this logic to a FSM
 	head.position.y = lerp(head.position.y, current_head_depth, delta * HEAD_MOVE_MULTIPLIER)
 	
 	# apply gravity
@@ -94,6 +98,20 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 	
 	move_and_slide()
+	
+	# handle pushing objects
+	# https://kidscancode.org/godot_recipes/4.x/physics/character_vs_rigid/
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is RigidBody3D:
+			c.get_collider().apply_central_impulse(-c.get_normal() * 2.0)
+	
+	# handle interactions
+	if Input.is_action_just_pressed("interact"):
+		if reach_ray.get_collider():
+			# carriables
+			if reach_ray.get_collider().is_in_group("carriables"):
+				print("good")
 
 
 # flip the current collider

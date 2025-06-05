@@ -217,10 +217,10 @@ collision_mask = 5
 size = Vector3(0.168457, 0.589355, 2)
 material = ExtResource("1_71j4m")
 
-[node name="TestBall" type="RigidBody3D" parent="Stage"]
+[node name="TestBall" type="RigidBody3D" parent="Stage" groups=["carriables"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.98144, 5.1406, -0.771764)
 collision_layer = 4
-collision_mask = 3
+collision_mask = 7
 physics_material_override = SubResource("PhysicsMaterial_71j4m")
 metadata/_edit_group_ = true
 
