@@ -249,6 +249,7 @@ script = ExtResource("3_qfnet")
 shape = SubResource("BoxShape3D_qfnet")
 
 [node name="Player" parent="." instance=ExtResource("3_4wyf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.31522, 0)
 
 [node name="HUD" type="CanvasLayer" parent="Player" node_paths=PackedStringArray("player")]
 script = ExtResource("4_71j4m")

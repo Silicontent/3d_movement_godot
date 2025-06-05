@@ -45,10 +45,6 @@ var direction := Vector3.ZERO
 const MOUSE_SENS := 0.25
 #endregion
 
-#region player states
-@export_enum("Idle", "Moving", "Falling") var state := 0
-#endregion
-
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -73,14 +69,9 @@ func _physics_process(delta: float) -> void:
 	
 	# move head based on current state
 	head.position.y = lerp(head.position.y, current_head_depth, delta * HEAD_MOVE_MULTIPLIER)
-	
-	# apply gravity
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
-	if Input.is_action_just_pressed("dbg_jump") and is_on_floor():
-		velocity.y = 7
-	
+
+
+func move(delta: float) -> void:
 	# get input direction and calculate movement direction
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	direction = lerp(
@@ -98,23 +89,8 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, current_speed)
 	
 	move_and_slide()
-	
-	# handle pushing objects
-	# https://kidscancode.org/godot_recipes/4.x/physics/character_vs_rigid/
-	for i in get_slide_collision_count():
-		var c = get_slide_collision(i)
-		if c.get_collider() is RigidBody3D:
-			c.get_collider().apply_central_impulse(-c.get_normal() * 2.0)
-	
-	# handle interactions
-	if Input.is_action_just_pressed("interact"):
-		if reach_ray.get_collider():
-			# carriables
-			if reach_ray.get_collider().is_in_group("carriables"):
-				print("good")
 
 
-# flip the current collider
 func swap_colliders() -> void:
 	walking_collider.disabled = not walking_collider.disabled
 	crouching_collider.disabled = not crouching_collider.disabled
