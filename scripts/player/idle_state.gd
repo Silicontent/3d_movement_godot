@@ -3,10 +3,13 @@ extends PlayerState
 
 func physics_update(delta: float) -> void:
 	# slow player to a stop
-	# TODO: check that this actually does anything
-	player.velocity.x = move_toward(player.velocity.x, 0, player.current_speed)
-	player.velocity.z = move_toward(player.velocity.z, 0, player.current_speed)
-	player.move_and_slide()
+	player.direction = lerp(
+		player.direction,
+		Vector3.ZERO,
+		delta * player.MOMENTUM
+	)
+	
+	player.move()
 	
 	# transition to other states
 	if not player.is_on_floor():

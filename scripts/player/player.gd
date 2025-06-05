@@ -37,7 +37,7 @@ var current_head_depth := WALKING_DEPTH
 var crouching := false
 
 # how quickly the player speeds up and slows down
-const MOMENTUM := 25.0
+const MOMENTUM := 20.0
 # movement direction in 3D space
 var direction := Vector3.ZERO
 
@@ -50,9 +50,18 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
+func move() -> void:
+	# update velocity based on direction and move player
+	velocity.x = direction.x * current_speed
+	velocity.z = direction.z * current_speed
+	move_and_slide()
+
+
 # CROUCHING ===================================================================
 func _physics_process(delta: float) -> void:
 	# toggleable crouching
+	# (un)crouching is allowed in all states, which is why it is here
+	# in the main player script
 	if Input.is_action_just_pressed("crouch"):
 		if crouching and not roof_ray.is_colliding():
 			# only stand up if there isn't anything above them (such as a ceiling)
@@ -72,6 +81,7 @@ func _physics_process(delta: float) -> void:
 # switch between walking and crouching
 func swap_crouch_state() -> void:
 	crouching = not crouching
+	# change colliders so that the player is smaller when crouching
 	walking_collider.disabled = not walking_collider.disabled
 	crouching_collider.disabled = not crouching_collider.disabled
 

@@ -3,6 +3,7 @@ extends PlayerState
 
 func enter(prev_state_path: String, data := {}) -> void:
 	player.velocity = Vector3.ZERO
+	player.direction = Vector3.ZERO
 
 
 func physics_update(delta: float) -> void:
