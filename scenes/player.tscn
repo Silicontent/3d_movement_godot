@@ -10,6 +10,7 @@
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 14
+floor_max_angle = 0.872665
 script = ExtResource("1_3vyb7")
 
 [node name="WalkingCollider" type="CollisionShape3D" parent="."]

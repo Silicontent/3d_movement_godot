@@ -50,7 +50,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
-# MOVEMENT ====================================================================
+# CROUCHING ===================================================================
 func _physics_process(delta: float) -> void:
 	# toggleable crouching
 	if Input.is_action_just_pressed("crouch"):
@@ -58,40 +58,20 @@ func _physics_process(delta: float) -> void:
 			# only stand up if there isn't anything above them (such as a ceiling)
 			current_speed = WALKING_SPEED
 			current_head_depth = WALKING_DEPTH
-			crouching = not crouching
-			swap_colliders()
+			swap_crouch_state()
 		elif not crouching:
 			# make the player crouch
 			current_speed = CROUCHING_SPEED
 			current_head_depth = CROUCHING_DEPTH
-			crouching = not crouching
-			swap_colliders()
+			swap_crouch_state()
 	
 	# move head based on current state
 	head.position.y = lerp(head.position.y, current_head_depth, delta * HEAD_MOVE_MULTIPLIER)
 
 
-func move(delta: float) -> void:
-	# get input direction and calculate movement direction
-	var input_dir := Input.get_vector("left", "right", "forward", "backward")
-	direction = lerp(
-		direction,
-		(transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized(),
-		delta * MOMENTUM
-	)
-	
-	# handle movement
-	if direction:
-		velocity.x = direction.x * current_speed
-		velocity.z = direction.z * current_speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, current_speed)
-		velocity.z = move_toward(velocity.z, 0, current_speed)
-	
-	move_and_slide()
-
-
-func swap_colliders() -> void:
+# switch between walking and crouching
+func swap_crouch_state() -> void:
+	crouching = not crouching
 	walking_collider.disabled = not walking_collider.disabled
 	crouching_collider.disabled = not crouching_collider.disabled
 
