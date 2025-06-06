@@ -1,7 +1,7 @@
 extends PlayerState
 
 
-func enter(prev_state_path: String, data := {}) -> void:
+func enter(_prev_state_path: String, _data := {}) -> void:
 	player.velocity = Vector3.ZERO
 	player.direction = Vector3.ZERO
 
