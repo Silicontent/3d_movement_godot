@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://pgbugrfknlof"]
+
+[ext_resource type="Script" uid="uid://dvawte73ud6fd" path="res://scripts/items/item.gd" id="1_5j7rs"]
+[ext_resource type="PackedScene" uid="uid://bcb6o5o76jtng" path="res://assets/models/items/cutting_pliers.tscn" id="1_e3qf1"]
+
+[resource]
+script = ExtResource("1_5j7rs")
+name = "Cutting Pliers"
+model = ExtResource("1_e3qf1")
+metadata/_custom_type_script = "uid://dvawte73ud6fd"
