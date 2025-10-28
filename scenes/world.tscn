@@ -2,7 +2,6 @@
 
 [ext_resource type="Material" uid="uid://bwi4amqkytg4l" path="res://assets/debug_material.tres" id="1_71j4m"]
 [ext_resource type="Texture2D" uid="uid://cw5i0mqr6ndtd" path="res://assets/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_nnsk1"]
-[ext_resource type="PackedScene" uid="uid://xnu7im23scuu" path="res://scenes/items/cutting_pliers.tscn" id="2_7r4gi"]
 [ext_resource type="PackedScene" uid="uid://uto1ebtejtxa" path="res://scenes/player.tscn" id="3_4wyf3"]
 [ext_resource type="Script" uid="uid://dj00aegjjg7k7" path="res://scripts/void_area.gd" id="3_qfnet"]
 [ext_resource type="Script" uid="uid://bdjbgd1eqlgxc" path="res://scripts/hud.gd" id="4_71j4m"]
@@ -18,11 +17,11 @@ roughness = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_71j4m"]
 material = SubResource("StandardMaterial3D_qfnet")
-radius = 0.25
-height = 0.5
+radius = 0.4
+height = 0.8
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_qfnet"]
-radius = 0.25
+[sub_resource type="SphereShape3D" id="SphereShape3D_4mrxx"]
+radius = 0.4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mrxx"]
 albedo_color = Color(0, 1, 0, 1)
@@ -32,6 +31,9 @@ roughness = 0.0
 material = SubResource("StandardMaterial3D_4mrxx")
 radius = 0.25
 height = 0.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qfnet"]
+radius = 0.25
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4mrxx"]
 bounce = 1.0
@@ -250,7 +252,7 @@ metadata/_edit_group_ = true
 mesh = SubResource("SphereMesh_71j4m")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/TestBall"]
-shape = SubResource("SphereShape3D_qfnet")
+shape = SubResource("SphereShape3D_4mrxx")
 
 [node name="TestBall2" type="RigidBody3D" parent="Stage" groups=["carriables"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.98144, 5.1406, 1.61619)
@@ -277,9 +279,6 @@ mesh = SubResource("SphereMesh_w7kh3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stage/TestBall3"]
 shape = SubResource("SphereShape3D_qfnet")
-
-[node name="CuttingPliers" parent="Stage" instance=ExtResource("2_7r4gi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16677, -2.9107)
 
 [node name="Environment" type="Node3D" parent="."]
 

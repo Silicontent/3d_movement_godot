@@ -61,8 +61,8 @@ func move() -> void:
 # CROUCHING ===================================================================
 func _physics_process(delta: float) -> void:
 	# toggleable crouching
-	# (un)crouching is allowed in all states, which is why it is here
-	# in the main player script
+	# (un)crouching is allowed in all states, which is why it is
+	# here in the main player script
 	if Input.is_action_just_pressed("crouch"):
 		if crouching and not roof_ray.is_colliding():
 			# only stand up if there isn't anything above them (such as a ceiling)

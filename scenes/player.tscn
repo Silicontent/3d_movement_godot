@@ -4,12 +4,10 @@
 [ext_resource type="Shape3D" uid="uid://cr555uddpj0rk" path="res://assets/player/walking_collider.tres" id="2_g2els"]
 [ext_resource type="Shape3D" uid="uid://c88kvwakjr34g" path="res://assets/player/crouching_collider.tres" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://clvsbr7giecyt" path="res://scripts/state_machine/state_machine.gd" id="4_qlg0r"]
+[ext_resource type="Script" uid="uid://217soxheow2e" path="res://scripts/player/hand.gd" id="4_smehm"]
 [ext_resource type="Script" uid="uid://jgiu2sb2dbxr" path="res://scripts/player/idle_state.gd" id="5_tuyoq"]
 [ext_resource type="Script" uid="uid://crw7hid0gcv6j" path="res://scripts/player/moving_state.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://cnkv5o6efehcm" path="res://scripts/player/falling_state.gd" id="7_fjrip"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fjrip"]
-no_depth_test = true
 
 [node name="Player" type="CharacterBody3D"]
 collision_mask = 14
@@ -35,12 +33,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00708365, 0.00974345, 0.004
 target_position = Vector3(0, 0, -3.5)
 collision_mask = 6
 
-[node name="Hand" type="Node3D" parent="Head"]
+[node name="Hand" type="MeshInstance3D" parent="Head" node_paths=PackedStringArray("reach_ray")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.337862, -0.162457, -0.470692)
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="Head/Hand"]
-radius = 0.137141
-material = SubResource("StandardMaterial3D_fjrip")
+script = ExtResource("4_smehm")
+reach_ray = NodePath("../ReachRay")
 
 [node name="RoofRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
